@@ -5,6 +5,27 @@ const __tableBody = __table.querySelector("tbody");
 const __formSearch = document.querySelector("#formSearch");
 const __inputSearch = __formSearch.search;
 
+const __btnScrollTop = document.querySelector("#btnScrollTop");
+const __btnScrollBottom = document.querySelector("#btnScrollBottom");
+
+const __timerElement = document.querySelector("#timer");
+
+// Timer Functions
+const __timers = {};
+
+const __startTimer = (key) => {
+  __timers[key] = new Date();
+};
+
+const __endTimer = (key) => {
+  try {
+    return new Date() - __timers[key];
+  } catch (e) {
+    console.error(e);
+    return -1;
+  }
+};
+
 // UI Functions
 const __buildResultRowNode = (name, isHeader = false) => {
   const row = document.createElement("tr");
@@ -17,6 +38,29 @@ const __buildResultRowNode = (name, isHeader = false) => {
   colName.appendChild(spanName);
 
   return row;
+};
+
+__btnScrollTop.addEventListener("click", () =>
+  scrollTo({ top: 0, behavior: "smooth" })
+);
+__btnScrollBottom.addEventListener("click", () =>
+  scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })
+);
+
+document.addEventListener("scroll", () => {
+  const showTop = window.scrollY > window.innerHeight;
+  const showBottom =
+    window.scrollY < document.body.scrollHeight - window.innerHeight;
+
+  if (showTop) __btnScrollTop.classList.add("is-active");
+  else __btnScrollTop.classList.remove("is-active");
+
+  if (showBottom) __btnScrollBottom.classList.add("is-active");
+  else __btnScrollBottom.classList.remove("is-active");
+});
+
+const __updateTimer = (ms) => {
+  __timerElement.innerText = "Refreshed in: " + ms + " ms";
 };
 
 // Helpers
@@ -49,8 +93,7 @@ const __traverseObjNames = (obj, accumulator) => {
   for (const header in obj) {
     _headers.push(header);
   }
-  _headers.push(...Object.getOwnPropertyNames(obj));
-  const headers = removeDups(_headers);
+  const headers = removeDups(_headers.concat(Object.getOwnPropertyNames(obj)));
 
   for (const header of headers) {
     try {
@@ -97,30 +140,51 @@ __traverseObjNames(document, __ALL_JS_API);
 __formSearch.addEventListener("submit", __onSearch);
 __inputSearch.addEventListener("input", (e) => {
   if (e.target.value === "") {
-    __updateTable(__ALL_JS_API);
+    __loadAll();
   }
 });
 
 function __onSearch(e) {
   e.preventDefault();
-  const searchTerm = __inputSearch.value;
+  __startTimer("search");
 
-  const results = __ALL_JS_API.filter((api) =>
-    api.name.toLowerCase().includes(searchTerm)
-  );
+  try {
+    const searchTerm = __inputSearch.value.toLowerCase();
 
-  __updateTable(results);
+    if (searchTerm == "") return;
+
+    const results = __ALL_JS_API.filter((api) =>
+      api.name.toLowerCase().includes(searchTerm)
+    );
+
+    __updateTable(results);
+  } catch (e) {
+    console.error(e);
+  } finally {
+    __updateTimer(__endTimer("search"));
+  }
 }
+
+const __loadAll = () => {
+  __startTimer("reset");
+  __updateTable(__ALL_JS_API);
+  __updateTimer(__endTimer("reset"));
+};
 
 const __updateTable = (list) => {
   // Clear first
   __tableBody.innerHTML = "";
 
-  // Add each again
+  // Add elements on a fragment
+  const d = document.createDocumentFragment();
   list.forEach((api) => {
-    __tableBody.appendChild(api.el);
+    d.appendChild(api.el);
   });
+
+  // Append the whole fragment to body
+  __tableBody.appendChild(d);
 };
 
 // Load all first
-__updateTable(__ALL_JS_API);
+// __updateTable(__ALL_JS_API);
+__loadAll();

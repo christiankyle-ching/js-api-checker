@@ -24,31 +24,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css"
     />
 
-    <style>
-      .text-center {
-        text-align: center;
-      }
-
-      .w-100 {
-        width: 100%;
-      }
-
-      button {
-        background-color: black;
-        border-color: black;
-      }
-
-      table {
-        display: table !important;
-        table-layout: fixed;
-      }
-
-      th,
-      tr,
-      td {
-        overflow-wrap: break-word;
-      }
-    </style>
+    <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
     <noscript> Please allow Javascript to run this. </noscript>
@@ -56,32 +32,64 @@
     <div class="container" style="margin-top: 3.6rem">
       <header class="text-center">
         <h1>JS API Checker</h1>
-        <p>Check Javascript APIs' compatibility on your current browser.</p>
-
-        <form id="formSearch">
-          <input
-            name="search"
-            type="search"
-            spellcheck="false"
-            placeholder="Enter any JS API (ex. navigator.clipboard)..."
-          />
-
-          <button type="submit" class="w-100">Search</button>
-        </form>
+        <span
+          >Check Javascript APIs' compatibility on your current browser.</span
+        >
       </header>
+
+      <form id="formSearch">
+        <input
+          name="search"
+          type="search"
+          spellcheck="false"
+          placeholder="Enter any JS API (ex. navigator.clipboard)..."
+        />
+
+        <button type="submit" class="w-100 m-0">Search</button>
+
+        <small id="timer"></small>
+      </form>
 
       <section>
         <table id="tableJSApi" class="text-center">
           <thead>
             <tr>
-              <th>JS API</th>
+              <th><h4 class="m-0">JS APIs</h4></th>
             </tr>
           </thead>
 
-          <tbody></tbody>
+          <tbody>
+            <!-- INJECTED BY JS -->
+          </tbody>
         </table>
       </section>
+
+      <!-- Floating Buttons -->
+      <div class="nav-buttons">
+        <button
+          class="button-round button-icon transition-opacity"
+          id="btnScrollTop"
+        >
+          <img src="./img/chevrons-up.svg" alt="Scroll to Top" />
+        </button>
+        <button
+          class="button-round button-icon transition-opacity"
+          id="btnScrollBottom"
+        >
+          <img src="./img/chevrons-down.svg" alt="Scroll to Bottom" />
+        </button>
+      </div>
     </div>
+
+    <footer class="container">
+      <h4>JS API Checker</h4>
+
+      <small
+        >Icons by <a href="https://feathericons.com/">Feather Icons</a></small
+      >
+      <br />
+      <small>CSS by <a href="https://milligram.io/">Milligram</a></small>
+    </footer>
 
     <script src="./index.js"></script>
   </body>

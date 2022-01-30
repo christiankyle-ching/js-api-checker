@@ -1,0 +1,94 @@
+.text-center {
+  text-align: center;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.p-0 {
+  padding: 0;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+button {
+  background-color: black;
+  border-color: black;
+}
+
+button.button-round {
+  border-radius: 3em;
+}
+
+button.button-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  width: 5rem;
+  height: 5rem;
+}
+
+table {
+  display: table !important;
+  table-layout: fixed;
+}
+
+th,
+tr,
+td {
+  overflow-wrap: break-word;
+}
+
+#formSearch {
+  position: sticky;
+  top: 0;
+  margin: 0;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  background-color: white;
+}
+
+#tableJSApi {
+  min-height: 100vh;
+}
+
+.nav-buttons {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  z-index: 10;
+}
+
+.transition-opacity {
+  transition: opacity 250ms ease-in-out;
+  opacity: 0;
+}
+
+.transition-opacity.is-active {
+  opacity: 1;
+}
+
+footer {
+  padding: 2rem !important;
+  background-color: black;
+  color: white;
+}
+
+a {
+  color: currentColor;
+}
+
+a:hover {
+  color: currentColor;
+  text-decoration: underline;
+}
