@@ -110,5 +110,24 @@
     </footer>
 
     <script src="./index.js"></script>
+
+    <!-- Google Analytics -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.5/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.5/firebase-analytics.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBTfMASEGuR6d_tBdgY23cS-2_-ulGs-nk",
+        authDomain: "js-api-checker.firebaseapp.com",
+        projectId: "js-api-checker",
+        storageBucket: "js-api-checker.appspot.com",
+        messagingSenderId: "1063285235513",
+        appId: "1:1063285235513:web:60149c58186f2aa2efd2e8",
+        measurementId: "G-1G0ZV2XQ6X",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
   </body>
 </html>
